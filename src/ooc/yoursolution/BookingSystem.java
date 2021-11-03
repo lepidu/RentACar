@@ -5,10 +5,28 @@
  */
 package ooc.yoursolution;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 /**
  *
  * @author Leisly Pino
  */
-public class BookingSystem {
+public class BookingSystem implements BookingSystemInterface{
+
+    @Override
+    public BookingSystem createBook(BufferedReader in) throws IOException {
+        
+        String details =in.readLine();
+        String content="";
+        
+        BookingSystem booking = new Booking();
+        while (details != null){
+            content =in.readLine();
+            
+        }
+        
+        return
+    }
+
     
 }
