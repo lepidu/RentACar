@@ -1,5 +1,7 @@
 package ooc.yoursolution;
 
+import ooc.enums.Make;
+
 /**
  *
  * @author Leisly Pino 2020303
@@ -15,6 +17,10 @@ public final class Car {
         this.rate = rate;
         this.availability = availability;
         
+    }
+
+    Car(Make make, double rate, int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     public String getMake() {
         return make;
