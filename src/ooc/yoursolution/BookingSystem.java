@@ -13,20 +13,7 @@ import java.io.IOException;
  */
 public class BookingSystem implements BookingSystemInterface{
 
-    @Override
-    public BookingSystem createBook(BufferedReader in) throws IOException {
-        
-        String details =in.readLine();
-        String content="";
-        
-        BookingSystem booking = new Booking();
-        while (details != null){
-            content =in.readLine();
-            
-        }
-        
-        return
-    }
+  
 
     
 }
