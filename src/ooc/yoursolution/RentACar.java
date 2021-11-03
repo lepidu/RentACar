@@ -1,6 +1,5 @@
 package ooc.yoursolution;
 
-import java.util.ArrayList;
 import java.util.List;
 import ooc.enums.Make;
 import ooc.enums.Month;
@@ -11,37 +10,50 @@ import ooc.enums.Month;
 public class RentACar implements RentACarInterface {
     
     List<CarInterface> Cars;
+    String name;
+    int numCars;
+    
+    public RentACar(List<CarInterface> cars, String name, int numCars){
+        this.Cars = cars;
+        this.name = name;
+        this.numCars = numCars;
+    }
 
     @Override
     public List<CarInterface> getCars() {
-        
         return Cars;
     }
 
     @Override
     public void setCars(List<CarInterface> cars) {
-        this.Cars.add((CarInterface) cars);
+        this.Cars = cars;
     }
 
     @Override
     public String getName() {
-        return Cars.
+        return name;
     }
 
     @Override
     public void setName(String name) {
-        boolean contentEquals = this.Cars.toString().contentEquals(name);
+        this.name = name;
     }
 
     @Override
     public boolean checkAvailability(Month month, int day, Make make, int lengthOfRent) {
+        boolean check = false;
         for(CarInterface availability : Cars){
-            if(availability.isAvailable(month, day)){
-                return availability.setAvailability(availability);
+            if(availability.getMake() == make){
+                for (int i=0; i < lengthOfRent; i++){
+                    if (availability.getAvailability().get(month)[day+1-1]){
+                        check = false;
+                        break;
+                    } else
+                        check = true;
+                }
             }
-       
         }
-        return null;
+        return check;
     }
     
 
@@ -57,6 +69,6 @@ public class RentACar implements RentACarInterface {
 
     @Override
     public int getNumberOfCars() {
-        
+        return numCars;
     }
 }
