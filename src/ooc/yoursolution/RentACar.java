@@ -1,6 +1,7 @@
 package ooc.yoursolution;
 
 import java.util.List;
+import java.util.Map;
 import ooc.enums.Make;
 import ooc.enums.Month;
 /**
@@ -45,7 +46,7 @@ public class RentACar implements RentACarInterface {
         for(CarInterface availability : Cars){
             if(availability.getMake() == make){
                 for (int i=0; i < lengthOfRent; i++){
-                    if (availability.getAvailability().get(month)[day+1-1]){
+                    if (availability.getAvailability().get(month)[day+i-1]){
                         check = false;
                         break;
                     } else
@@ -56,15 +57,45 @@ public class RentACar implements RentACarInterface {
         return check;
     }
     
-
     @Override
     public int getCarAvailable(Month month, int day, Make make, int lengthOfRent) {
-        
+        int check = 0;
+        for(CarInterface availability : Cars){
+            if(availability.getMake() == make){
+                for (int i=0; i < lengthOfRent; i++){
+                    if (availability.getAvailability().get(month)[day+i-1]){
+                        check = 0;
+                        break;
+                    } else
+                        check = availability.getId();
+                }if (check !=0){
+                    break;
+                }
+            }
+        }
+        return check;
     }
 
     @Override
     public boolean bookCar(Month month, int day, Make make, int lengthOfRent) {
-        
+        boolean check = false;
+        for(CarInterface availability : Cars){
+            if(availability.getMake() == make){
+                for (int i=0; i < lengthOfRent; i++){
+                    if (!availability.getAvailability().get(month)[day+i-1]){
+                        Map<Month, boolean[]> available = availability.getAvailability();
+                        boolean[] days = availability.getAvailability().get(month);
+                        days[day+i+1] = true;
+                        available.replace(month, days);
+                        availability.setAvailability(available);
+                        check = true;
+                    } else
+                        check = false;
+                }
+            } else 
+                break;
+        }
+        return check;
     }
 
     @Override
