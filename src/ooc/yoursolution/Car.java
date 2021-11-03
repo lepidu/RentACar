@@ -1,43 +1,93 @@
 package ooc.yoursolution;
 
+import java.util.HashMap;
+import java.util.Map;
 import ooc.enums.Make;
+import ooc.enums.Month;
 
 /**
  *
  * @author Leisly Pino 2020303
  */
-public final class Car {
+public class Car implements CarInterface {
     
-    public final String make;
-    public final int rate;
-    public final int availability;
+    public  Make make;
+    public  double rate;
+    public  int id;
+    public Map<Month, boolean[]> availability;
 
-    public Car (String make, int rate, int availability){
+    public Car (Make make, double rate, int id){
         this.make = make;
         this.rate = rate;
-        this.availability = availability;
-        
+        this.id = id;  
     }
-
-    Car(Make make, double rate, int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    public String getMake() {
+    
+    @Override
+    public Make getMake() {
         return make;
     }
-
-    public int getRate() {
+    
+    @Override
+    public double getRate() {
         return rate;
     }
+    
+    @Override
+    public int getId() {
+        return id;
+    }
+    
+    @Override
+    public void setMake(Make make) {
+        this.make = make;
+    }
 
-    public int getAvailability() {
+    @Override
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+//    @Override
+    public Map<Month, boolean[]> getAvailability() {
         return availability;
     }
 
     @Override
-    public String toString() {
-        return "Make " + make + ", € " +rate+ " per day, there are " + availability + " of them."; 
+    public Map<Month, boolean[]> createAvailability() {
+        availability = new HashMap<>();
+        availability.put(Month.JANUARY, new boolean[Month.JANUARY.getNumberOfDays()]);
+        availability.put(Month.FEBRUARY, new boolean[Month.FEBRUARY.getNumberOfDays()]);
+        availability.put(Month.MARCH, new boolean[Month.MARCH.getNumberOfDays()]);
+        availability.put(Month.APRIL, new boolean[Month.APRIL.getNumberOfDays()]);
+        availability.put(Month.MAY, new boolean[Month.MAY.getNumberOfDays()]);
+        availability.put(Month.JUNE, new boolean[Month.JUNE.getNumberOfDays()]);
+        availability.put(Month.JULY, new boolean[Month.JULY.getNumberOfDays()]);
+        availability.put(Month.AUGUST, new boolean[Month.AUGUST.getNumberOfDays()]);
+        availability.put(Month.SEPTEMBER, new boolean[Month.SEPTEMBER.getNumberOfDays()]);
+        availability.put(Month.OCTOBER, new boolean[Month.OCTOBER.getNumberOfDays()]);
+        availability.put(Month.NOVEMBER, new boolean[Month.NOVEMBER.getNumberOfDays()]);
+        availability.put(Month.DECEMBER, new boolean[Month.DECEMBER.getNumberOfDays()]);
+        return availability;
     }
-    
+
+    @Override
+    public void setAvailability(Map<Month, boolean[]> availability) {
+        this.availability = availability;
+    }
+
+    @Override
+    public boolean isAvailable(Month month, int day) {
+        return availability.get(month)[day -1];
+    }
+
+    @Override
+    public boolean book(Month month, int day) {
+        boolean[] value = availability.get(month);
+        if(availability.get(month)[day-1]){
+            value[day-1] = false;
+            availability.replace(month, value);
+            return true;
+        } else
+            return false;
+    }
     
 }
